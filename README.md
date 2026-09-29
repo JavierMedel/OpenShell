@@ -13,11 +13,13 @@
 [![Security Policy](https://img.shields.io/badge/Security-Report%20a%20Vulnerability-red)](SECURITY.md)
 [![Documentation](https://img.shields.io/badge/docs-latest-brightgreen)](https://docs.nvidia.com/openshell/latest/index.html)
 
-OpenShell is the safe, private runtime for fleets of autonomous AI agents. Agents are most useful when they can read files, install packages, call APIs, and use credentials. OpenShell gives them that capability without giving them unrestricted access to your data, secrets, or network. You declare what each agent can touch in a policy, and OpenShell enforces it.
+OpenShell is the safe, private runtime for fleets of autonomous AI agents.
+
+Agents earn their keep by reading files, installing packages, calling APIs, and using credentials. Those are also the capabilities that put your data, secrets, and network at risk. OpenShell grants the capability without granting unrestricted access: you declare what each agent may touch in a policy, and OpenShell enforces it on every request the agent makes.
 
 ## How It Works
 
-OpenShell governs what agents can do in two ways: it instruments the kernel to enforce policy on every file access, system call, and network connection at runtime, and it uses formal verification to check what a policy change would allow before it is applied.
+OpenShell governs agents in two ways. Kernel controls enforce policy on every file access, system call, and network connection. And before any policy change is applied, formal verification checks what that change would allow.
 
 - **Kernel-level enforcement.** Each agent runs in an isolated sandbox. Kernel controls confine which files it can access and which system calls it can make, and every network connection passes through a policy check before it leaves the sandbox. Agents never see real credentials; OpenShell adds them only to requests bound for approved endpoints.
 - **Formally verified policy changes.** Before a policy change is approved, OpenShell uses formal verification to flag risky new access it would grant, such as reaching a new host with credentials or calling a new API method, so those changes wait for human review.
