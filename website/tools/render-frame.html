@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+  SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  SPDX-License-Identifier: Apache-2.0
+
+  Headless render target for the architecture GIF. Renders the diagram at its
+  native 1280x870 size and applies a highlight for the node named in ?node=<id>.
+  Used by make-gif.py; not part of the published site.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OpenShell architecture frame</title>
+    <!--
+      styles.css owns every colour/typography rule for the diagram classes emitted
+      by architecture.js, so it must be linked here — without it the SVG renders
+      with default black fills and disappears against the dark canvas.
+    -->
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #070b11;
+      }
+
+      /* Pin the diagram to its native viewBox size for a pixel-exact capture. */
+      body .arch-svg {
+        display: block;
+        width: 1280px;
+        height: 870px;
+      }
+
+      /*
+       * GIF highlight treatment: brighten the focused node and softly accent its
+       * related parts, but never dim the rest — a dimming flicker reads badly in a
+       * looping GIF and makes the diagram harder to follow.
+       */
+      .arch-node.is-active rect {
+        stroke: #a6e22e;
+        stroke-width: 3;
+      }
+
+      .arch-node.is-active .t-label {
+        fill: #ffffff;
+      }
+
+      .arch-node.is-related rect {
+        stroke: #76b900;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="stage"></div>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/architecture.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        var id = new URLSearchParams(window.location.search).get("node");
+        window.OpenShellArchitecture.render(document.getElementById("stage"));
+
+        if (!id || !window.OS_DATA.nodes[id]) return;
+
+        var svg = document.querySelector("svg.arch-svg");
+        var mark = function (nodeId, cls) {
+          var g = svg.querySelector('[data-node="' + nodeId + '"]');
+          if (g) g.classList.add(cls);
+        };
+
+        mark(id, "is-active");
+        (window.OS_DATA.nodes[id].related || []).forEach(function (r) {
+          mark(r, "is-related");
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!--
+  SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+  SPDX-License-Identifier: Apache-2.0
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenShell — the safe, private runtime for autonomous AI agents</title>
+    <meta
+      name="description"
+      content="OpenShell gives fleets of autonomous AI agents the capability to read files, install packages, call APIs, and use credentials without unrestricted access to your data, secrets, or network."
+    />
+    <meta name="theme-color" content="#05070a" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="OpenShell" />
+    <meta property="og:title" content="OpenShell — the safe, private runtime for autonomous AI agents" />
+    <meta
+      property="og:description"
+      content="Give agents the ability to read files, install packages, call APIs, and use credentials — without unrestricted access to your data, secrets, or network."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#architecture">Skip to architecture</a>
+
+    <!-- ── Nav ──────────────────────────────────────────────────────── -->
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <a class="brand" href="#top" aria-label="NVIDIA OpenShell home">
+          <img class="brand-nvidia" src="assets/nvidia-logo.png" alt="NVIDIA" width="96" height="20" />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-text">OpenShell</span>
+        </a>
+
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span>
+        </button>
+
+        <nav class="nav-links" id="site-nav" aria-label="Primary">
+          <a href="#overview">Overview</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#components">Components</a>
+          <a href="#sdks">SDKs</a>
+          <a href="https://docs.nvidia.com/openshell/latest/" target="_blank" rel="noopener">Docs</a>
+          <a
+            class="nav-cta"
+            href="https://github.com/NVIDIA/OpenShell"
+            target="_blank"
+            rel="noopener"
+          >GitHub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- ── Hero ───────────────────────────────────────────────────── -->
+      <section class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="container hero-inner">
+          <div class="hero-brand">
+            <img src="assets/nvidia-logo.png" alt="NVIDIA" width="88" height="18" />
+            <span class="hero-brand-divider" aria-hidden="true"></span>
+            <span>An NVIDIA open-source project</span>
+          </div>
+          <span class="eyebrow">
+            <span class="dot"></span> Safe, private runtime for AI agents
+          </span>
+          <h1>
+            Agents with capability,<br />
+            without the <span class="grad">unrestricted access</span>.
+          </h1>
+          <p class="lead">
+            OpenShell gives fleets of autonomous AI agents the ability to read files, install
+            packages, call APIs, and use credentials — without giving them unrestricted access to
+            your data, secrets, or network. You declare what each agent can touch in a policy, and
+            OpenShell enforces it.
+          </p>
+
+          <div class="install" role="group" aria-label="Install OpenShell">
+            <div class="install-code">
+              <span class="prompt" aria-hidden="true">$</span>
+              <code id="install-cmd">curl -LsSf https://raw.githubusercontent.com/NVIDIA/OpenShell/main/install.sh | sh</code>
+            </div>
+            <button class="copy-btn" id="copy-install" aria-label="Copy install command">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="11" height="11" rx="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              <span class="copy-label">Copy</span>
+            </button>
+          </div>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://docs.nvidia.com/openshell/latest/about/run-your-first-agent" target="_blank" rel="noopener">
+              Run your first agent
+            </a>
+            <a class="btn btn-ghost" href="#architecture">Explore the architecture</a>
+          </div>
+
+          <dl class="hero-stats">
+            <div><dt>Apache-2.0</dt><dd>Open source license</dd></div>
+            <div><dt>4 SDKs</dt><dd>Python · TS · Go · Rust</dd></div>
+            <div><dt>5 backends</dt><dd>Docker · Podman · K8s · VM · MXC</dd></div>
+            <div><dt>Formal proof</dt><dd>Policy verified before approval</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ── Overview / pillars ─────────────────────────────────────── -->
+      <section class="section" id="overview">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-kicker">How it works</span>
+            <h2>Two guarantees, enforced at the boundary</h2>
+            <p>
+              OpenShell governs what agents can do in two ways: it instruments the kernel to enforce
+              policy on every file access, system call, and network connection at runtime, and it uses
+              formal verification to check what a policy change would allow before it is applied.
+            </p>
+          </div>
+          <div class="pillars" id="pillars"></div>
+
+          <div class="capability-strip reveal">
+            <span class="chip chip-green">Read files</span>
+            <span class="chip chip-green">Install packages</span>
+            <span class="chip chip-green">Call APIs</span>
+            <span class="chip chip-green">Use credentials</span>
+            <span class="chip chip-off">No unrestricted network</span>
+            <span class="chip chip-off">No leaked secrets</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Architecture ───────────────────────────────────────────── -->
+      <section class="section section-arch" id="architecture">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-kicker">System architecture</span>
+            <h2>Control plane, data plane, and the boundary between them</h2>
+            <p>
+              User interfaces talk to the gateway. The gateway places each sandbox through a compute
+              driver and formally verifies policy changes with the prover. Inside the runtime, a trusted
+              supervisor governs an untrusted agent whose only network path is a mediated channel.
+            </p>
+          </div>
+
+          <figure class="figure">
+            <div class="figure-frame">
+              <div class="figure-bar">
+                <span class="figure-file">
+                  <span class="figure-dot" aria-hidden="true"></span>
+                  openshell &middot; system architecture
+                </span>
+                <div class="legend" aria-label="Legend">
+                  <span class="legend-item"><span class="swatch swatch-green"></span> Enforced boundary</span>
+                  <span class="legend-item"><span class="swatch swatch-trusted"></span> Trusted</span>
+                  <span class="legend-item"><span class="swatch swatch-flow"></span> Approved egress</span>
+                  <span class="legend-item"><span class="swatch swatch-blocked"></span> Blocked</span>
+                </div>
+                <div class="figure-actions">
+                  <span class="tour-count" id="tour-count" hidden></span>
+                  <button class="btn btn-mini btn-play" id="arch-play" type="button" aria-pressed="false">
+                    <svg class="icon icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M8 5.5l11 6.5-11 6.5z" />
+                    </svg>
+                    <svg
+                      class="icon icon-pause"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M9 5.5v13M15 5.5v13" />
+                    </svg>
+                    <span class="play-label">Auto-play</span>
+                  </button>
+                  <button class="btn btn-mini" id="arch-reset" type="button">Reset</button>
+                </div>
+                <span class="autoplay-bar" id="autoplay-bar" aria-hidden="true"></span>
+              </div>
+              <div class="arch-stage" id="arch-stage"></div>
+            </div>
+            <figcaption class="figure-caption">
+              <strong>Figure 1.</strong> Control plane, data plane, and the trust boundary between them.
+              Select any labelled box to inspect the component and its related parts. Scroll horizontally on
+              small screens.
+            </figcaption>
+          </figure>
+
+          <div class="arch-layout">
+            <aside class="arch-panel-wrap" aria-live="polite">
+              <div class="arch-panel" id="arch-panel"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Components ─────────────────────────────────────────────── -->
+      <section class="section" id="components">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-kicker">Components</span>
+            <h2>The pieces that make up a boundary</h2>
+            <p>Select a component to highlight where it lives in the architecture above.</p>
+          </div>
+          <div class="component-grid" id="component-grid"></div>
+        </div>
+      </section>
+
+      <!-- ── SDKs ───────────────────────────────────────────────────── -->
+      <section class="section section-sdk" id="sdks">
+        <div class="container">
+          <div class="section-head">
+            <span class="section-kicker">SDKs</span>
+            <h2>Connect applications to a gateway</h2>
+            <p>
+              SDKs connect applications to an OpenShell gateway. They do not install the CLI. Use the
+              same OpenShell release for the SDK and the gateway when possible.
+            </p>
+          </div>
+          <div class="sdk-grid" id="sdk-grid"></div>
+          <p class="sdk-foot">
+            SDK docs:
+            <a href="https://docs.nvidia.com/openshell/latest/sdk" target="_blank" rel="noopener">Python</a>,
+            <a href="https://github.com/NVIDIA/OpenShell/blob/main/sdk/typescript/README.md" target="_blank" rel="noopener">TypeScript</a>,
+            <a href="https://github.com/NVIDIA/OpenShell/blob/main/sdk/go/README.md" target="_blank" rel="noopener">Go</a>,
+            <a href="https://docs.nvidia.com/openshell/latest/sdk/rust" target="_blank" rel="noopener">Rust</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── CTA ────────────────────────────────────────────────────── -->
+      <section class="section section-cta">
+        <div class="container cta-inner reveal">
+          <div>
+            <h2>Give your agents capability — safely.</h2>
+            <p>Install the CLI and a local gateway, then run a real agent end to end.</p>
+          </div>
+          <div class="cta-actions">
+            <a class="btn btn-primary" href="https://docs.nvidia.com/openshell/latest/about/run-your-first-agent" target="_blank" rel="noopener">Get started</a>
+            <a class="btn btn-ghost" href="https://docs.nvidia.com/openshell/latest/" target="_blank" rel="noopener">Read the docs</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Footer ───────────────────────────────────────────────────── -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <img class="footer-nvidia" src="assets/nvidia-logo.png" alt="NVIDIA" width="104" height="22" />
+          <div>
+            <p class="footer-name">OpenShell</p>
+            <p class="footer-tag">Built agent-first by NVIDIA.</p>
+          </div>
+        </div>
+        <nav class="footer-links" aria-label="Footer">
+          <div>
+            <span>Project</span>
+            <a href="https://github.com/NVIDIA/OpenShell" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/NVIDIA/OpenShell/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a>
+            <a href="https://github.com/NVIDIA/OpenShell/blob/main/LICENSE" target="_blank" rel="noopener">License</a>
+          </div>
+          <div>
+            <span>Learn</span>
+            <a href="https://docs.nvidia.com/openshell/latest/" target="_blank" rel="noopener">Documentation</a>
+            <a href="https://docs.nvidia.com/openshell/latest/about/architecture" target="_blank" rel="noopener">Architecture</a>
+            <a href="https://docs.nvidia.com/openshell/latest/security/best-practices" target="_blank" rel="noopener">Security</a>
+          </div>
+          <div>
+            <span>Community</span>
+            <a href="https://github.com/NVIDIA/OpenShell/discussions" target="_blank" rel="noopener">Discussions</a>
+            <a href="https://github.com/NVIDIA/OpenShell/issues" target="_blank" rel="noopener">Issues</a>
+            <a href="https://github.com/NVIDIA/OpenShell/blob/main/SECURITY.md" target="_blank" rel="noopener">Report a vulnerability</a>
+          </div>
+        </nav>
+      </div>
+      <div class="container footer-bottom">
+        <p>Licensed under Apache-2.0. NVIDIA and the NVIDIA logo are trademarks of NVIDIA Corporation.</p>
+        <p class="footer-legal">
+          This software automatically retrieves, accesses, or interacts with external materials. Those retrieved
+          materials are not distributed with this software and are governed solely by separate terms, conditions,
+          and licenses.
+        </p>
+      </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/architecture.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

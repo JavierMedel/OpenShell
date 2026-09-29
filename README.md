@@ -27,6 +27,10 @@ OpenShell governs what agents can do in two ways: it instruments the kernel to e
 
 See [Architecture](https://docs.nvidia.com/openshell/latest/about/architecture) for how the gateway, supervisor, and sandbox fit together.
 
+![OpenShell system architecture. User interfaces connect to the gateway, which uses the policy prover to formally verify proposed policy changes before approval. The runtime places a trusted supervisor separately from a network-isolated sandbox workload, whose only network path is a mediated channel to the supervisor. The supervisor reaches approved external services, and the policy lifecycle runs from proposal to human approval to reload.](docs/images/openshell-system-architecture.gif)
+
+*The diagram steps through a request: interfaces reach the gateway, the gateway places the sandbox and has the prover verify policy, the workload is fenced off from the network, the supervisor mediates approved reach, and policy changes loop back for approval. A static copy is in [`openshell-system-architecture.svg`](docs/images/openshell-system-architecture.svg).*
+
 ## Quickstart
 
 You need Linux, macOS on Apple Silicon, or Windows with WSL 2 (experimental), plus Docker, Podman, or host virtualization. See the [Support Matrix](https://docs.nvidia.com/openshell/latest/about/support-matrix) for details.

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="OpenShell">
+  <!-- SPDX-FileCopyrightText: Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+  <!-- SPDX-License-Identifier: Apache-2.0 -->
+  <rect width="32" height="32" rx="7" fill="#05070a" />
+  <g fill="none" stroke="#76b900" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 5.5l9 5.2v10.6l-9 5.2-9-5.2V10.7z" />
+    <path d="M12.4 13.4L15.2 16.2l-2.8 2.8" />
+    <path d="M17 19h3.6" />
+  </g>
+</svg>
